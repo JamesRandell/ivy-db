@@ -1,0 +1,25 @@
+{
+    "name": "ivy_db",
+    "version": "1.0.0",
+    "scripts": {
+        "start": "node resource/script/server/server.js",
+        "dev": "npx nodemon index.py"
+    },
+    "dependencies": {
+        "nodemon": "^2.0.12"
+    },
+    "type": "module",
+    "nodemonConfig": {
+        "watch": [
+            "*"
+        ],
+        "ignore": [
+            "/resource/*"
+        ],
+        "delay": 1,
+        "execMap": {
+            "pl": "perl"
+        },
+        "ext": "py"
+    }
+}
