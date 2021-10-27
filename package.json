@@ -2,15 +2,15 @@
     "name": "ivy_db",
     "version": "1.0.0",
     "scripts": {
-        "dev": "npx nodemon nodemon --exec python3 index.py"
+        "dev": "npx nodemon --exec python3 index.py"
     },
     "dependencies": {
-        "nodemon": "^2.0.12"
+        "nodemon": "^2.0.14"
     },
     "type": "module",
     "nodemonConfig": {
         "watch": [
-            "*"
+            "*.py"
         ],
         "ignore": [
             "/resource/*"

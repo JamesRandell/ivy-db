@@ -1,21 +1,19 @@
 import subprocess
+from module.nodetool import nodetool
 
-var = 'docker container list | awk \'{if ($(2) == "cassandra:latest") {print $1}}\''
+nodetool = nodetool()
 
+token_list = []
 
-process = subprocess.Popen(['echo', 'More output'],
-                     stdout=subprocess.PIPE, 
-                     stderr=subprocess.PIPE)
-stdout, stderr = process.communicate()
-stdout, stderr
+fileOutput = 'output'
 
+stdout, stderr = nodetool.status()
+print(stderr)
+for line in stdout.split("\n"): 
+    print(f'Line: {line}')
 
-
-
-#sts = subprocess.Popen([var], shell=True).wait()
-sts = subprocess.run(var)
-print(sts)
-
-#import os
-#os.system('docker container list | awk \'{if ($(2) == "cassandra:latest") {print $1}}\'')
+    for col in line.split(" "):
+        if (col == ''):
+            continue
+        print(f'Col: {col}')
 
