@@ -4,7 +4,7 @@ class base:
         self.containerID = ''
         o, r = self.runShell('docker container list | awk \'{if ($(2) == "cassandra:latest") {print $1}}\'')
         self.containerID = self._clean(o)
-
+        self.dev = 0
         return
     
 
@@ -13,7 +13,6 @@ class base:
         if (self.containerID != ''):
             arg = f'docker exec {self.containerID} {arg}'
 
-        print(arg)
         result = subprocess.Popen(arg,
                         shell=True,
                         stdout=subprocess.PIPE, 
@@ -22,7 +21,7 @@ class base:
         stdout, stderr = result.communicate()
         return stdout, stderr
 
-    def processShellResult(self, input, seperator=" ",dev=0):
+    def processShellResult(self, input, seperator=" "):
         l, c = 0, 0
         output = {}
 
@@ -33,9 +32,8 @@ class base:
             l, c = l + 1, 0
 
             output[l] = {}
-            if (dev == 1 ):
+            if (self.dev == 1 ):
                 print(f'Line {l}: {line}')
-            
             
             for col in line.split(seperator):
                 if (col == ''):
@@ -44,20 +42,21 @@ class base:
                 c = c + 1
                 
                 output[l][c] = col.strip()
-                if (dev == 1 ):
+                if (self.dev == 1 ):
                     print(f'Col {c}: {col}')
 
         return output
 
-
-
     def _convertSize(self, col):
         if "KiB" in col:
-            print('gggg')
             temp = col.replace("KiB", '').strip()
-            print(temp)
-            temp = float(temp) * 1024
-            col = temp
+            col = float(temp) * 1024
+        elif "MiB" in col:
+            temp = col.replace("MiB", '').strip()
+            col = float(temp) * 1024 * 1024
+        elif "NaN" in col:
+            temp = col.replace("NaN", '').strip()
+            col = ""
         return col
                     
     def _clean(self, arg):
