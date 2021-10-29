@@ -2,25 +2,30 @@ import subprocess
 import datetime
 import time
 import requests
+import json
 from requests.structures import CaseInsensitiveDict
 from module.nodetool import nodetool
 
 nodetool = nodetool()
 
 
-url = "http://localhost:8888"
+url = "http://localhost:8888/db/cassandra"
 
 headers = CaseInsensitiveDict()
 headers["Content-Type"] = "application/json"
-
-data = '{"login":"my_login","password":"my_password"}'
 
 
 
 def sendData():
     out, err = nodetool.info()
-    resp = requests.post(url, headers=headers, data=out)
-    print(resp.status_code)
+    
+    try:
+        res = requests.post(url, headers=headers, data=json.dumps(out))
+        print(res.status_code)
+    except requests.exceptions.RequestException as e:  # This is the correct syntax
+        print(e)
+        #raise SystemExit(e)
+    
 
 
 
