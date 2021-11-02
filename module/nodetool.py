@@ -47,10 +47,10 @@ class nodetool(base):
             result[ out[line][1] ] = {}
             result[ out[line][1] ] = out[line][2]
 
-        result["Load"] = self._convertSize(result["Load"])
-        result["Key Cache"] = self._info_cache(result["Key Cache"])
-        result["Row Cache"] = self._info_cache(result["Row Cache"])
-        result["Counter Cache"] = self._info_cache(result["Counter Cache"])
+        result["load"] = self._convertSize(result["load"])
+        result["key cache"] = self._info_cache(result["key cache"])
+        result["row cache"] = self._info_cache(result["row cache"])
+        result["counter cache"] = self._info_cache(result["counter cache"])
         
         return json.dumps(result), err
 

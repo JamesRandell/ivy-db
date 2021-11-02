@@ -41,7 +41,7 @@ class base:
 
                 c = c + 1
                 
-                output[l][c] = col.strip()
+                output[l][c] = col.strip().lower()
                 if (self.dev == 1 ):
                     print(f'Col {c}: {col}')
 
@@ -57,6 +57,9 @@ class base:
         elif "NaN" in col:
             temp = col.replace("NaN", '').strip()
             col = ""
+        elif "bytes" in col:
+            temp = col.replace("bytes", '').strip()
+            col = temp
         return col
                     
     def _clean(self, arg):
