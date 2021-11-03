@@ -27,7 +27,7 @@ def sendData():
             print('The server couldn\'t fulfill the request: Error code: ', e.code)
 
     #except requests.exceptions.RequestException as e:  # This is the correct syntax
-    #    print(e)
+    #    print(e) 
         #raise SystemExit(e)
     
 
@@ -44,12 +44,13 @@ def test():
 #test()
 
 count = 0
-
+ 
 while True:
     count += 1
     unixtime = datetime.datetime.now().timestamp()
     sendData()
     print(f'{count}: {unixtime}')
+    
     time.sleep(5)
 
 
