@@ -24,16 +24,19 @@ class nodetool(base):
 
         result = {}
         result["datacenter"] = out[1][2]
+        result["host"] = []
 
         for key, line in out.items(): 
             if (key >= 6):
-                result[ line[2] ] = {}
-                result[ line[2] ]["status"] = status.get(line[1], "Unknown status")
-                result[ line[2] ]["state"] = state.get(line[1], "Unknown state")
-                result[ line[2] ]["load"] = line[5]
-                result[ line[2] ]["owns"] = line[6]
-                result[ line[2] ]["hostID"] = line[7]
-                result[ line[2] ]["rack"] = line[8]
+                temp = {}
+                #result["host"][ line[2] ] = {}
+                temp["status"] = status.get(line[1], "Unknown status")
+                temp["state"] = state.get(line[1], "Unknown state")
+                temp["load"] = line[5]
+                temp["owns"] = line[6]
+                temp["hostID"] = line[7]
+                temp["rack"] = line[8]
+                result["host"].append(temp)
 
 
         return json.dumps(result), err

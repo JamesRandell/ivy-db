@@ -13,7 +13,7 @@ url = "http://localhost:8888/db/cassandra"
 
 
 def sendData():
-    out, err = nodetool.info()
+    out, err = nodetool.status()
     
     try:
         req = Request(url, data=json.dumps(out).encode())
