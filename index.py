@@ -9,7 +9,7 @@ from module.nodetool import nodetool
 nodetool = nodetool()
 
 
-url = "http://localhost:8888/db/cassandra"
+url = "http://localhost:8888/db/cassandra" 
 
 
 def sendData():
