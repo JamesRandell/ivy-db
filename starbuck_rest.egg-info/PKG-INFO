@@ -1,0 +1,11 @@
+Metadata-Version: 1.0
+Name: starbuck-rest
+Version: 0.1
+Summary: Cassandra REST interface
+Home-page: UNKNOWN
+Author: James Randell
+Author-email: jamesrandell@me.com
+License: UNKNOWN
+Description: UNKNOWN
+Keywords: Cassandra REST API JSON
+Platform: UNKNOWN

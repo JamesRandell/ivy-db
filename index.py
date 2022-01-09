@@ -44,12 +44,12 @@ def test():
 #test()
 
 count = 0
- 
+
 while True:
     count += 1
     unixtime = datetime.datetime.now().timestamp()
-    sendData()
-    print(f'{count}: {unixtime}')
+    #sendData()
+    #print(f'{count}: {unixtime}')
     
     time.sleep(5)
 

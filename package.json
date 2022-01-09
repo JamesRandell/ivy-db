@@ -2,7 +2,8 @@
     "name": "ivy_db",
     "version": "1.0.0",
     "scripts": {
-        "dev": "npx nodemon --exec python3 index.py"
+        "dev": "npx nodemon --exec python3 index.py",
+        "api": "npx nodemon --exec python3 server.py"
     },
     "dependencies": {
         "nodemon": "^2.0.14"
