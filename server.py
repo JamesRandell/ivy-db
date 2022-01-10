@@ -1,13 +1,36 @@
 from flask import Flask, request, jsonify
-from flask_restful import Resource, Api, reqparse
+from flask_restx import Resource, Api, reqparse, Namespace
 from json import dumps
-#from flask.jsonpify import jsonify
+
+from view.ns_server import ns_nodetool
+
+app = Flask(__name__) 
+#api = Api(app = app)
 
 
 
-app = Flask(__name__)
-api = Api(app)
-parser = reqparse.RequestParser()  # initialize
+api = Api(
+    #blueprint,
+    app = app,
+    version="1.0",
+    title="API Cassandra",
+    description="Cassandra REST API",
+)
+#parser = reqparse.RequestParser()  # initialize
+# APIs are defined under a given namespace, they appear under a given heading in Swagger
+api.add_namespace(ns_nodetool)
+
+
+#app.register_blueprint(api_bp, url_prefix='/test')
+
+
+
+#@ns_server.route('/')
+class HelloWorld(Resource):
+    def get(self):
+        return 'hello'
+
+
 class Employees(Resource):
     def get(self):
         return {'employees': 'employees stuff'} # Fetches first column that is Employee ID
@@ -31,10 +54,10 @@ class Users(Resource):
 
         return {'data': 'true'}, 200
 
-api.add_resource(Employees, '/employees') # Route_1
+#ns_server.add_resource(Employees, '/employees') # Route_1
 api.add_resource(Tracks, '/tracks') # Route_2
 api.add_resource(Employees_Name, '/employees/<employee_id>') # Route_3
-
+#api.add_resource(nodetool, '/nodetool')
 
 if __name__ == '__main__':
-     app.run(port='5002')
+     app.run(port='5000')

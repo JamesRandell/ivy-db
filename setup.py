@@ -2,8 +2,8 @@ from setuptools import setup, find_packages
 
 requires = [
     'flask',
-    'flask-restful',
     'flask-jsonpify',
+    'flask-restx',
 ]
 
 setup(

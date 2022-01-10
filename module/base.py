@@ -10,8 +10,11 @@ class base:
 
     def runShell(self, arg):
         import subprocess
+        
         if (self.containerID != ''):
             arg = f'docker exec {self.containerID} {arg}'
+        #else:
+        #    raise ValueError('there was an error')
 
         result = subprocess.Popen(arg,
                         shell=True,
