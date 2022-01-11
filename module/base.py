@@ -1,21 +1,21 @@
+import json
+
 class base:
 
-    def __init__(self):
+    def get_db_instance(self):
         self.containerID = ''
-        o, r = self.runShell('docker container list | awk \'{if ($(2) == "cassandra:latest") {print $1}}\'')
+        o, r = self.run_shell('docker container list | awk \'{if ($(2) == "cassandra:latest") {print $1}}\'')
+
         self.containerID = self._clean(o)
         self.dev = 0
-        return
-    
 
-    def runShell(self, arg):
+        return
+
+    def run_shell(self, arg):
         import subprocess
+
+       
         
-        
-        if (self.containerID != ''):
-            arg = f'docker exec {self.containerID} {arg}'
-        #else:
-        #    raise ValueError('there was an error')
 
         result = subprocess.Popen(arg,
                         shell=True,
@@ -23,7 +23,19 @@ class base:
                         stderr=subprocess.PIPE,
                         universal_newlines=True) 
         stdout, stderr = result.communicate()
+
+        if (result.returncode != 0):
+            print(f'Shell command failed "{arg}"')
+            exit()
+
         return stdout, stderr
+
+    def command (self, cmd):
+        self.get_db_instance()
+        cmd = f'docker exec {self.containerID} {cmd}'
+        out, err = self.run_shell(cmd)
+
+        return out, err
 
     def processShellResult(self, input, seperator=" "):
         l, c = 0, 0

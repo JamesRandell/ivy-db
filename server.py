@@ -3,6 +3,7 @@ from flask_restx import Resource, Api, reqparse, Namespace
 from json import dumps
 
 from view.ns_server import ns_nodetool
+from view.ns_table import ns_table
 
 app = Flask(__name__) 
 #api = Api(app = app)
@@ -14,12 +15,12 @@ api = Api(
     app = app,
     version="1.0",
     title="API Cassandra",
-    description="Cassandra REST API",
+    description="Cassandra REST API"
 )
 #parser = reqparse.RequestParser()  # initialize
 # APIs are defined under a given namespace, they appear under a given heading in Swagger
 api.add_namespace(ns_nodetool)
-
+api.add_namespace(ns_table)
 
 #app.register_blueprint(api_bp, url_prefix='/test')
 

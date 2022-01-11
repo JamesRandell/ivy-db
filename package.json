@@ -3,7 +3,8 @@
     "version": "1.0.0",
     "scripts": {
         "dev": "npx nodemon --exec python3 index.py",
-        "api": "npx nodemon --exec python3 server.py"
+        "api": "npx nodemon --exec python3 server.py",
+        "test": "npx nodemon --exec python3 test.py"
     },
     "dependencies": {
         "nodemon": "^2.0.14"
