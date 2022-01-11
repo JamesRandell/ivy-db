@@ -37,17 +37,35 @@ class base:
 
         return out, err
 
-    def processShellResult(self, input, seperator=" "):
+    def processShellResult(self, input, seperator=" ", pivot=False):
         l, c = 0, 0
         output = {}
+        keys = []
 
-        for line in input.split("\n"):
-            if (line == ''):
-                continue
-                
+        lines = input.split("\n")
+
+        lines = list(filter(None, lines))
+
+        for line in lines:
+            #if (line == ''):
+            #    continue
+            
             l, c = l + 1, 0
 
+            if (l == 2 or l == (len(lines))):
+                continue
+
+            
+
             output[l] = {}
+
+            if (pivot == True and l == 1):
+                for col in line.split(seperator):
+                    if (col == ''):
+                        continue
+
+                    keys.append(col.strip())
+
             if (self.dev == 1 ):
                 print(f'Line {l}: {line}')
             
@@ -55,9 +73,12 @@ class base:
                 if (col == ''):
                     continue
 
-                c = c + 1
+                if (keys):
+                    output[l][keys[c]] = col.strip().lower()    
+                else:
+                    output[l][c] = col.strip().lower()
                 
-                output[l][c] = col.strip().lower()
+                c = c + 1
                 if (self.dev == 1 ):
                     print(f'Col {c}: {col}')
 

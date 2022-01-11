@@ -14,11 +14,11 @@ ns_table = Namespace('_table', description='Cluster wide information')
 class test(Resource, base):
 
     def get(self):
-        out, err = self.command("cqlsh -e \"SELECT * FROM system_schema.tables\"")
+        out, err = self.command("cqlsh -e \"SELECT * FROM system_schema.tables LIMIT 2\"")
         #print(f'A: {out}') 
         #out = self.processShellResult(out)
         #print(f'B: {out}') 
-        out = self.processShellResult(out, seperator="|")
+        out = self.processShellResult(out, seperator="|", pivot=True)
         return jsonify(out)
 ns_table.add_resource(test, '/status') # Route_2
 
