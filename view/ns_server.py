@@ -13,7 +13,7 @@ class nodetool_status(Resource, base):
     def get(self):
         out, err = self.command("nodetool status")
         #print(f'A: {out}') 
-        out = self.processShellResult(out)
+        out = self.process_shell_result(out)
         #print(f'B: {out}') 
 
         status = {"UN": "Up","UL": "Up","UJ": "Up","UM": "Up","DN": "Down","DL": "Down","DJ": "Down","DM": "Down"}
@@ -46,7 +46,7 @@ class nodetool_info(Resource, base):
 
     def get(self):
         out, err = self.command("nodetool info")
-        out = self.processShellResult(out, seperator=":")
+        out = self.process_shell_result(out, seperator=":")
 
         result = {}
         for line in out:
@@ -83,7 +83,7 @@ ns_nodetool.add_resource(nodetool_info, '/info') # Route_2
 class nodetool_profileload(Resource, base):
     def get(self):
         out, err = self.command("nodetool profileload")
-        out = self.processShellResult(out, seperator=":")
+        out = self.process_shell_result(out, seperator=":")
 
         return out
 ns_nodetool.add_resource(nodetool_profileload, '/profile') # Route_2
@@ -92,7 +92,7 @@ ns_nodetool.add_resource(nodetool_profileload, '/profile') # Route_2
 class nodetool_histograms(Resource, base):
     def get(self):
         out, err = self.command("nodetool tablehistograms")
-        out = self.processShellResult(out, seperator=":")
+        out = self.process_shell_result(out, seperator=":")
         out = json.loads(out)
         
         return jsonify(out)

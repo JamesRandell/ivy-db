@@ -23,9 +23,16 @@ with app.app_context():
     if (args[0]):
         my_class = getattr(my_class, args[1])
         my_instance = my_class()
-        res = my_instance.get()
+
+        args_string = ' '.join(args[2:])
+
+        res, HTTP_status = my_instance.get(args_string)
 
         if isinstance(res, str):
             print(res)
-        else:
+        elif('data' in res):
             print(res.data)
+        else:
+            print(res)
+                    
+        print(HTTP_status)
