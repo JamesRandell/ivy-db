@@ -6,7 +6,7 @@ import json
 #blueprint = Blueprint("api", __name__, url_prefix="/api/v1")
 
 # Namespace
-ns_nodetool = Namespace('_cluster', description='Cluster wide information')
+ns_nodetool = Namespace('cluster', description='Cluster wide information')
 
 class nodetool_status(Resource, base):
 

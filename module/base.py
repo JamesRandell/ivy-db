@@ -1,4 +1,9 @@
 import json
+from jinja2 import Template, Environment, FileSystemLoader
+
+
+file_loader = FileSystemLoader('template/src')
+env = Environment(loader=file_loader)
 
 class base:
 
@@ -26,7 +31,7 @@ class base:
 
         if (result.returncode != 0):
             print(f'Shell command failed "{arg}"')
-            exit()
+            #exit()
 
         return stdout, stderr
 
@@ -36,6 +41,35 @@ class base:
         out, err = self.run_shell(cmd)
 
         return out, err
+
+    def command_cql(self, cmd):
+        script = cmd
+        cmd = f"cqlsh -e \"{cmd}\""
+
+        out, err = self.command(cmd)
+
+        # CQL errors come as a string with 4 sections, seperated by a colon:
+        # (0)<stdin> : (1)error number : (2)type or code : (3)description (more on this)
+        errStruct = {}
+        if err:
+            err = err.split(':')
+            errStruct['error'] = err[-1].strip()
+            errStruct['code'] = err[2]
+           
+            if (err[2] == "InvalidRequest"):
+                # the description has more values in it, which look like
+                # (3)Error from server : (4)code=2200 [something] message=the error
+                print(err[4])
+                message_location = err[4].find("message") + 9 # the length of the word "message="
+                errStruct['code'] = err[4][6:err[4].find("[")].strip()
+                errStruct['error'] = err[4][message_location:len(err[4])-2].strip()
+                errStruct['script'] = script
+            elif(err[2] == "SyntaxException"):
+                errStruct['error'] = err[4]
+            
+            err = errStruct
+
+        return out, errStruct
 
     def process_shell_result(self, input, seperator=" "):
         l, c = 0, 0
@@ -147,3 +181,10 @@ class base:
     def _clean(self, arg):
         return arg.rstrip("\n")
     
+    def template(self, template_name, data={}):
+        template = env.get_template(f'{template_name}.tpl')
+        output = template.render(data=data)
+        
+        return output
+
+
