@@ -74,7 +74,7 @@ class base:
     def process_shell_result(self, input, seperator=" "):
         l, c = 0, 0
         output = {}
-
+        
         for line in input.split("\n"):
             if (line == ''):
                 continue

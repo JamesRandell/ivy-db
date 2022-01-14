@@ -45,8 +45,8 @@ class ns_keyspace_all(Resource, base):
             200: 'List of all keyspaces in the cluster'}
         )
     def get(self):
-        out, err = self.command_cql("SELECT JSON * FROM system_schema.keyspaces")
-        out, count, meta = self.process_cql_result(out, key="keyspace_name")
+        out, err = self.command("cqlsh -e \"SELECT JSON * FROM system_schema.keyspaces\"")
+        out = self.process_cql_result(out, key="keyspace_name")
 
         return out, 200
 

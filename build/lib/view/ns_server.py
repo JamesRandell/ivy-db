@@ -93,7 +93,7 @@ class nodetool_histograms(Resource, base):
     def get(self):
         out, err = self.command("nodetool tablehistograms")
         out = self.process_shell_result(out, seperator=":")
-        #out = json.loads(out)
+        out = json.loads(out)
         
         return jsonify(out)
 ns_nodetool.add_resource(nodetool_histograms, '/histogram') # Route_2
