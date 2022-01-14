@@ -81,7 +81,7 @@ class base:
         """
         l, c = 0, 0
         output = {}
-
+        
         for line in input.split("\n"):
             if (line == ''):
                 continue
