@@ -6,6 +6,7 @@ import json
 from view.ns_server import ns_nodetool
 from view.ns_table import ns_table
 from view.ns_keyspace import ns_keyspace
+from view.ns_health import ns_health
 
 app = Flask(__name__) 
 #api = Api(app = app)
@@ -24,6 +25,7 @@ api = Api(
 api.add_namespace(ns_nodetool)
 api.add_namespace(ns_table)
 api.add_namespace(ns_keyspace)
+api.add_namespace(ns_health)
 
 #app.register_blueprint(api_bp, url_prefix='/test')
 

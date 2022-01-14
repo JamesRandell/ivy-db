@@ -72,6 +72,13 @@ class base:
         return out, errStruct
 
     def process_shell_result(self, input, seperator=" "):
+        """
+        Takes the output of a shell command and formats it use in the app
+        The input is going to be a wierd shell result, so this may get funky...
+
+        :param input: the shell result to parse and format
+        :param seperator: the delimiter to cut up our columns
+        """
         l, c = 0, 0
         output = {}
 
@@ -82,8 +89,6 @@ class base:
             l, c = l + 1, 0
 
             output[l] = {}
-            if (self.dev == 1 ):
-                print(f'Line {l}: {line}')
             
             for col in line.split(seperator):
                 if (col == ''):
@@ -92,8 +97,6 @@ class base:
                 c = c + 1
                 
                 output[l][c] = col.strip().lower()
-                if (self.dev == 1 ):
-                    print(f'Col {c}: {col}')
 
         return output
 

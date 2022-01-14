@@ -84,18 +84,18 @@ class nodetool_profileload(Resource, base):
     def get(self):
         out, err = self.command("nodetool profileload")
         out = self.process_shell_result(out, seperator=":")
-
-        return out
+        #out = json.loads(out)
+        return out, 200
 ns_nodetool.add_resource(nodetool_profileload, '/profile') # Route_2
 
 
 class nodetool_histograms(Resource, base):
     def get(self):
-        out, err = self.command("nodetool tablehistograms")
+        out, err = self.command("nodetool tablehistograms -F")
         out = self.process_shell_result(out, seperator=":")
-        out = json.loads(out)
+        #out = json.loads(out)
         
-        return jsonify(out)
+        return out, 200
 ns_nodetool.add_resource(nodetool_histograms, '/histogram') # Route_2
 
 
@@ -104,5 +104,6 @@ class nodetool_tablestats(Resource, base):
         out, err = self.command("nodetool tablestats -F json")
         out = json.loads(out)
         
-        return jsonify(out)
+        return out, 200
+
 ns_nodetool.add_resource(nodetool_tablestats, '/tablestats') # Route_2
