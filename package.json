@@ -4,7 +4,9 @@
     "scripts": {
         "dev": "npx nodemon --exec python3 index.py",
         "api": "npx nodemon --exec python3 server.py",
-        "test": "npx nodemon --exec python3 test.py"
+        "test": "npx nodemon --exec python3 test.py",
+        "wintest": "npx nodemon --exec python test.py",
+        "winapi": "npx nodemon --exec python server.py"
     },
     "dependencies": {
         "nodemon": "^2.0.14"

@@ -1,3 +1,4 @@
+README
 setup.py
 starbuck_rest.egg-info/PKG-INFO
 starbuck_rest.egg-info/SOURCES.txt
@@ -5,6 +6,7 @@ starbuck_rest.egg-info/dependency_links.txt
 starbuck_rest.egg-info/requires.txt
 starbuck_rest.egg-info/top_level.txt
 view/__init__.py
+view/ns_health.py
 view/ns_keyspace.py
 view/ns_server.py
 view/ns_table.py

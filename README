@@ -1,0 +1,23 @@
+# Use this command to install
+python setup.py install --user
+
+# Then this to fire of nodemon if developing:
+npm run test (my custom built test module, you can pass a controller/method to call it when building the api)
+npm run api (the api server for the rest interface)
+
+# optional requirement builder if you want to use requirements instead of setup
+# If you have installed many dependencies in your system and you need requirements.txt for a specific project, you # can install first pipreqs:
+ 
+$ pip install pipreqs
+ 
+# and execute the below command under the project folder.
+ 
+$ pipreqs
+ 
+# This command will generate requirements.txt file for the particular project.
+# This helps you to set up your development environment.
+# Run like so
+$ pip install -r requirements.txt
+
+# setup
+# This helps you to create packages that you can redistribute.
