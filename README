@@ -19,5 +19,8 @@ $ pipreqs
 # Run like so
 $ pip install -r requirements.txt
 
-# setup
-# This helps you to create packages that you can redistribute.
+# SSL keys
+# figuring out how to use keys. If we've gotten a private key creted already from ssh-keygen, it'll be
+# in a folder called module/connection/keys, we need to copy the public key on our linux hosts
+
+mkdir -p ~/.ssh && echo ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCy4q9+N+VokUte2KdHBElErKbGY+NCKAsPAu2zT2pTIPtNTuEqsPNIfshvZgIKAFMiLkP7cG01on3XXYwNAn4V0qNF9SCVDUeJvqdmeFjBV9L5V+UZFqZ0V4LybMvb49JC/uwokDEcvLxhBiEy6CuR0qPTNntJiZdq20rayGd8HaBiaPnXjxzpIjwiPzpTyZRsnH2P4aPJv3qheh8Pa6Z7/+yWBi8dqXouT3gOgUiw6DDh8v5EjZRZ1mrRPTg2LvzK7uMRmEL+KStQ5MyEhpRePo8osoo32v4xMq6ek/dmeWxZUWCsiP4H8Kgg9Cp0eWFBVJRBTX4MczTCct24AXFR james@DESKTOP-AT47MNM >> ~/.ssh/authorized_keys && chmod -R go= ~/.ssh
