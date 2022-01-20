@@ -1,3 +1,4 @@
 Flask
 flask-jsonpify
 flask-restx
+pyyaml

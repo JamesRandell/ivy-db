@@ -6,6 +6,9 @@ from pydoc import locate
 
 args = sys.argv[1:]
 
+if (len(args) < 2):
+    exit('Test script requires atleast 2 arguments: a view and a method')
+    
 b = importlib.import_module(f'view.{args[0]}')
 print(f'Loaded "{args[0]}"...')
 print(f'Calling "{args[1]}"...')

@@ -1,0 +1,12 @@
+database: cassandra
+
+#database_env: docker
+#database_config:
+#  host: localhost
+#  container: ivy-ui-cassandra
+
+database_env: standard
+database_config:
+  host: [192.168.1.3,192.168.1.7,192.168.1.10,192.168.1.11,192.168.1.25]
+#  #post: 
+

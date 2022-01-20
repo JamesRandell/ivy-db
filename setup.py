@@ -4,6 +4,7 @@ requires = [
     'Flask',
     'flask-jsonpify',
     'flask-restx',
+    'pyyaml'
 ]
 
 setup(

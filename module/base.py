@@ -1,44 +1,21 @@
 import json
 from jinja2 import Template, Environment, FileSystemLoader
+from module.database import Connection
+from module.shell import Shell
+
+
+conn = Connection()
 
 
 file_loader = FileSystemLoader('template/src')
 env = Environment(loader=file_loader)
 
-class base:
-
-    def get_db_instance(self):
-        self.containerID = ''
-        o, r = self.run_shell('docker container list | awk \'{if ($(2) == "cassandra:latest") {print $1}}\'')
-
-        self.containerID = self._clean(o)
-        self.dev = 0
-
-        return
-
-    def run_shell(self, arg):
-        import subprocess
-
-        result = subprocess.Popen(arg,
-                        shell=True,
-                        stdout=subprocess.PIPE, 
-                        stderr=subprocess.PIPE,
-                        universal_newlines=True) 
-        stdout, stderr = result.communicate()
-
-        if stderr:
-            print(stderr)
-
-        if (result.returncode != 0):
-            print(f'Shell command failed "{arg}"')
-            #exit()
-
-        return stdout, stderr
+class base():
 
     def command (self, cmd):
-        self.get_db_instance()
-        cmd = f'docker exec {self.containerID} {cmd}'
-        out, err = self.run_shell(cmd)
+
+        cmd = f'{conn.shell_string} {cmd}'
+        out, err = Shell.run(cmd)
 
         return out, err
 
