@@ -3,6 +3,16 @@ import subprocess
 from module.shell import Shell
 import os
 
+class color:
+    HEADER = '\033[95m'
+    OKBLUE = '\033[94m'
+    OKCYAN = '\033[96m'
+    OKGREEN = '\033[92m'
+    WARNING = '\033[93m'
+    FAIL = '\033[91m'
+    END = '\033[0m'
+    BOLD = '\033[1m'
+    UNDERLINE = '\033[4m'
 class Conn(Shell):
 
 
@@ -12,7 +22,10 @@ class Conn(Shell):
 
         self.config = config # not used right now as i'm just dealing with local docker
 
-        self.path_cert = os.path.dirname(os.path.realpath(__file__)) + '\keys\starbuck_rest_api_key'
+        self.path_cert = os.path.dirname(os.path.realpath(__file__)) + '\keys\id_rsa'
+
+        self.ssh_user = 'starbuck'
+
 
         if os.path.exists(self.path_cert) == False:
             exit(f'File does not exist: {self.path_cert}')
@@ -20,7 +33,7 @@ class Conn(Shell):
         print(f'Found key file: {self.path_cert}')
         
         container_id = self.choose_host()
-        
+    
 
         self._create_certs()
         
@@ -43,22 +56,25 @@ class Conn(Shell):
             # -tt force psueo tty (honestly can't remember why this is here, test without?)
             # -i private key (identity file)
             #try:
+            print(f'{color.HEADER}Connecting to: {self.ssh_user}@{host}{color.END}') 
             ssh = subprocess.Popen(['ssh',
                                         '-o',
                                         'ConnectTimeout=2',
-                                        '-oStrictHostKeyChecking=no',
+                                        '-o',
+                                        'StrictHostKeyChecking=no',
                                         '-tt',
-                                        f'root@{host}',
+                                        f'{self.ssh_user}@{host}',
                                         '-i',
-                                        f'"{self.path_cert}"',
+                                        f'{self.path_cert}',
                                         f'"nodetool status"'],
                                     stdin=subprocess.PIPE,
                                     stdout=subprocess.PIPE,
                                     stderr=subprocess.PIPE)
-            (stdout, stderr) = ssh.communicate()
+            (stdout, stderr) = ssh.communicate() 
                 #o, r = Shell.run(f'ssh -o ConnectTimeout=2 -oStrictHostKeyChecking=no -tt root@{host} -i "{self.path_cert}" "nodetool status"')
             #except:
             if stderr:
+                print(f'{color.FAIL}{stdout}{color.END}')
                 print(stderr)
             else:
                 return stdout
