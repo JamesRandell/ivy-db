@@ -74,18 +74,15 @@ class Conn(Shell):
                 #o, r = Shell.run(f'ssh -o ConnectTimeout=2 -oStrictHostKeyChecking=no -tt root@{host} -i "{self.path_cert}" "nodetool status"')
             #except:
             if stderr:
-                print(f'{color.FAIL}{stdout.decode("utf-8").strip()}{color.END}')
+                print(f'{stderr}')
+                print(f'fff{color.FAIL}{stdout.decode("utf-8").strip()}{color.END}')
                 print(stderr.decode("utf-8").strip())
             else:
                 return stdout.decode("utf-8").strip()
-                #print(f'R:{r}')
+
         #return o.rstrip("\n")
 
     def _create_certs(self):
-        #ssh-keygen -b 2048 -t rsa -f C:/temp/sshkey -q -N ""
-
-
-        out, err = Shell.run(f'ssh-keygen -b 2048 -t rsa -f "{self.path_cert}" -q -N ""')
 
         out, err = Shell.run(f'ssh-keygen -b 2048 -t rsa -f "{self.path_cert}" -q -N ""')
         print(out)
