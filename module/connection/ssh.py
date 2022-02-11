@@ -66,18 +66,18 @@ class Conn(Shell):
                                         f'{self.ssh_user}@{host}',
                                         '-i',
                                         f'{self.path_cert}',
-                                        f'"nodetool status"'],
-                                    stdin=subprocess.PIPE,
+                                        f'nodetool status'],
+                                    stdin=subprocess.PIPE, 
                                     stdout=subprocess.PIPE,
-                                    stderr=subprocess.PIPE)
+                                    stderr=subprocess.PIPE) 
             (stdout, stderr) = ssh.communicate() 
                 #o, r = Shell.run(f'ssh -o ConnectTimeout=2 -oStrictHostKeyChecking=no -tt root@{host} -i "{self.path_cert}" "nodetool status"')
             #except:
             if stderr:
-                print(f'{color.FAIL}{stdout}{color.END}')
-                print(stderr)
+                print(f'{color.FAIL}{stdout.decode("utf-8").strip()}{color.END}')
+                print(stderr.decode("utf-8").strip())
             else:
-                return stdout
+                return stdout.decode("utf-8").strip()
                 #print(f'R:{r}')
         #return o.rstrip("\n")
 
