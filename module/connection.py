@@ -2,7 +2,7 @@ from distutils.log import error
 import errno
 from sre_compile import isstring
 import yaml, importlib
-from module.connection import *
+from module.connectors import *
 
 class color:
     HEADER = '\033[95m'
@@ -30,7 +30,7 @@ class Connection:
         print(f"{color.OKCYAN}Config: using config setings for {color.BOLD}'{config['database_env']}'{color.END}")
 
         try:
-            connection_class = importlib.import_module(f"module.connection.{config['database_env']}")
+            connection_class = importlib.import_module(f"module.connectors.{config['database_env']}")
         except:
             exit(f"{color.FAIL}Connection: could not find a connection module called '{config['database_env']}'{color.END}")
         

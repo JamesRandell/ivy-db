@@ -13,13 +13,13 @@ class color:
     END = '\033[0m'
     BOLD = '\033[1m'
     UNDERLINE = '\033[4m'
+
+
 class Conn(Shell):
 
-
-
     def __init__(self, config):
-        self.shell_string = '' # this is what our app will use to prefix any commands we send to the database on the shell 
-
+        #self.shell_string = '' # this is what our app will use to prefix any commands we send to the database on the shell 
+        
         self.config = config # not used right now as i'm just dealing with local docker
 
         self.path_cert = os.path.dirname(os.path.realpath(__file__)) + '\keys\id_rsa'
@@ -28,14 +28,14 @@ class Conn(Shell):
 
 
         if os.path.exists(self.path_cert) == False:
-            exit(f'File does not exist: {self.path_cert}')
+            exit(f'{color.FAIL}File does not exist: {self.path_cert}{color.END}')
 
-        print(f'Found key file: {self.path_cert}')
+        print(f'{color.HEADER}Found key file: {self.path_cert}{color.END}')
         
-        container_id = self.choose_host()
+        container_id = self.run_ssh_command()
     
 
-        self._create_certs()
+        #self._create_certs()
         
         self.build_shell_string(container_id)
 
@@ -46,7 +46,7 @@ class Conn(Shell):
 
         
 
-    def choose_host(self):
+    def run_ssh_command(self):
 
         # the host key contains a list of hosts
         for host in self.config['database_config']['host']:
@@ -55,13 +55,15 @@ class Conn(Shell):
             # -oStrictHostKeyChecking gets around any invalid root CAs
             # -tt force psueo tty (honestly can't remember why this is here, test without?)
             # -i private key (identity file)
-            #try:
+            # -n don't pass standard input, so it doesnt wait for a password and cause the command to hang
+            # -q supress warnings, -qq suppress fatal too!
+
             print(f'{color.HEADER}Connecting to: {self.ssh_user}@{host}{color.END}') 
+
             ssh = subprocess.Popen(['ssh',
-                                        '-o',
-                                        'ConnectTimeout=2',
-                                        '-o',
-                                        'StrictHostKeyChecking=no',
+                                        '-oConnectTimeout=1',
+                                        '-oStrictHostKeyChecking=no',
+                                        '-oBatchMode=yes',
                                         '-tt',
                                         f'{self.ssh_user}@{host}',
                                         '-i',
@@ -71,16 +73,15 @@ class Conn(Shell):
                                     stdout=subprocess.PIPE,
                                     stderr=subprocess.PIPE) 
             (stdout, stderr) = ssh.communicate() 
-                #o, r = Shell.run(f'ssh -o ConnectTimeout=2 -oStrictHostKeyChecking=no -tt root@{host} -i "{self.path_cert}" "nodetool status"')
-            #except:
-            if stderr:
-                print(f'{stderr}')
-                print(f'fff{color.FAIL}{stdout.decode("utf-8").strip()}{color.END}')
-                print(stderr.decode("utf-8").strip())
-            else:
-                return stdout.decode("utf-8").strip()
 
-        #return o.rstrip("\n")
+            if stdout:
+                print(f'{color.OKGREEN}{stdout.decode("utf-8").strip()}{color.END}')
+                print(f'{color.HEADER}Connection closed{color.END}')
+                return stdout.decode("utf-8").strip()
+            else:
+                print(f'{color.FAIL}{stderr.decode("utf-8").strip()}{color.END}')
+                
+
 
     def _create_certs(self):
 
