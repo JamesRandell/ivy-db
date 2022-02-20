@@ -73,7 +73,7 @@ class Conn(Shell):
                                     stdout=subprocess.PIPE,
                                     stderr=subprocess.PIPE) 
             (stdout, stderr) = ssh.communicate()
-
+ 
             if stdout:
                 print(f'{color.OKGREEN}{stdout.decode("utf-8").strip()}{color.END}')
                 print(f'{color.HEADER}Connection closed{color.END}')
