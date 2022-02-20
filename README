@@ -30,3 +30,6 @@ mkdir -p ~/.ssh && echo ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCy4q9+N+VokUte2KdH
 python test.py 
 # - or - 
 npm run test # or wintest for windows
+
+# try this for testing:
+npm run wintest ns_server nodetool_status

@@ -59,7 +59,7 @@ class Conn(Shell):
             # -q supress warnings, -qq suppress fatal too!
 
             print(f'{color.HEADER}Connecting to: {self.ssh_user}@{host}{color.END}') 
-
+            print(f'{color.HEADER}Running command:{color.END} nodetool status') 
             ssh = subprocess.Popen(['ssh',
                                         '-oConnectTimeout=1',
                                         '-oStrictHostKeyChecking=no',
@@ -72,7 +72,7 @@ class Conn(Shell):
                                     stdin=subprocess.PIPE, 
                                     stdout=subprocess.PIPE,
                                     stderr=subprocess.PIPE) 
-            (stdout, stderr) = ssh.communicate() 
+            (stdout, stderr) = ssh.communicate()
 
             if stdout:
                 print(f'{color.OKGREEN}{stdout.decode("utf-8").strip()}{color.END}')
