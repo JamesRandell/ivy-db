@@ -12,9 +12,7 @@ class nodetool_status(Resource, base):
 
     def get(self):
         out, err = self.command("nodetool status")
-        #print(f'A: {out}') 
         out = self.process_shell_result(out)
-        #print(f'B: {out}') 
 
         status = {"UN": "Up","UL": "Up","UJ": "Up","UM": "Up","DN": "Down","DL": "Down","DJ": "Down","DM": "Down"}
         state = {"UN": "Normal","UL": "Leaving","UJ": "Joining","UM": "Moving","DN": "Normal","DL": "Leaving","DJ": "Joining","DM": "Moving"}
@@ -24,6 +22,7 @@ class nodetool_status(Resource, base):
         state = {k.lower(): v for k, v in state.items()}
 
         result = {}
+        
         result["datacenter"] = out[1][2]
         result["host"] = []
 
@@ -37,8 +36,10 @@ class nodetool_status(Resource, base):
                 temp["hostID"] = line[7]
                 temp["rack"] = line[8]
                 result["host"].append(temp)
-        
-        return result
+
+        result = json.dumps(result)
+
+        return result, 200
 ns_nodetool.add_resource(nodetool_status, '/status') # Route_2
 
 
@@ -58,7 +59,9 @@ class nodetool_info(Resource, base):
         result["row cache"] = self._info_cache(result["row cache"])
         result["counter cache"] = self._info_cache(result["counter cache"])
         
-        return result
+        result = json.dumps(result)
+
+        return result, 200
 
     def _info_cache(self, cacheStr):
         counter = 0
@@ -76,6 +79,8 @@ class nodetool_info(Resource, base):
         result["hit_rate"] = self._convertSize(temp[6].replace('recent hit rate', '').strip())
         result["save_period"] = temp[7].replace('save period in seconds', '').strip()
 
+        result = json.dumps(result)
+        
         return result
 ns_nodetool.add_resource(nodetool_info, '/info') # Route_2
 

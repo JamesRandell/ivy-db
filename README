@@ -5,6 +5,17 @@ python setup.py install --user
 npm run test (my custom built test module, you can pass a controller/method to call it when building the api)
 npm run api (the api server for the rest interface)
 
+# To run the test file
+python test.py 
+# - or - 
+npm run test # or wintest for windows
+
+# try this for testing:
+npm run wintest ns_server nodetool_status
+
+
+
+
 # optional requirement builder if you want to use requirements instead of setup
 # If you have installed many dependencies in your system and you need requirements.txt for a specific project, you # can install first pipreqs:
  
@@ -26,10 +37,3 @@ $ pip install -r requirements.txt
 mkdir -p ~/.ssh && echo ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCy4q9+N+VokUte2KdHBElErKbGY+NCKAsPAu2zT2pTIPtNTuEqsPNIfshvZgIKAFMiLkP7cG01on3XXYwNAn4V0qNF9SCVDUeJvqdmeFjBV9L5V+UZFqZ0V4LybMvb49JC/uwokDEcvLxhBiEy6CuR0qPTNntJiZdq20rayGd8HaBiaPnXjxzpIjwiPzpTyZRsnH2P4aPJv3qheh8Pa6Z7/+yWBi8dqXouT3gOgUiw6DDh8v5EjZRZ1mrRPTg2LvzK7uMRmEL+KStQ5MyEhpRePo8osoo32v4xMq6ek/dmeWxZUWCsiP4H8Kgg9Cp0eWFBVJRBTX4MczTCct24AXFR james@DESKTOP-AT47MNM >> ~/.ssh/authorized_keys && chmod -R go= ~/.ssh
 
 
-# To run the test file
-python test.py 
-# - or - 
-npm run test # or wintest for windows
-
-# try this for testing:
-npm run wintest ns_server nodetool_status

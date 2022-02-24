@@ -58,27 +58,28 @@ with app.app_context():
         # * is a way to 'unpack' variables. * is a basic tuple, ** is a dict (key:value pairs)
         res, HTTP_status = my_instance.get(*args[2:])
 
-        
+        res = json.dumps(res)
         # check if this is json result
         try:
             json_check = json.loads(res)
             print('Returning JSON:')
             print(res)
-        except:
-            pass
 
-        try:
-            
-            if (iter(res)):
-                print('Returning iterable object:')
-                for x in res:
-                    print(x)
         except:
-            if isinstance(res, str):
-                print('Returning string:')
-                print(res)
-            else:
-                print('Returning something else:')
-                print(res.response)
+            #pass
+
+            try:
+                
+                if (iter(res)):
+                    print('Returning iterable object:')
+                    for x in res:
+                        print(x)
+            except:
+                if isinstance(res, str):
+                    print('Returning string:')
+                    print(res)
+                else:
+                    print('Returning something else:')
+                    print(res.response)
 
         print(f'HTTP Status: {HTTP_status}')

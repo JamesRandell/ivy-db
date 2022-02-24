@@ -17,6 +17,8 @@ class color:
 
 class Conn(Shell):
 
+    result = ""
+
     def __init__(self, config):
         #self.shell_string = '' # this is what our app will use to prefix any commands we send to the database on the shell 
         
@@ -27,26 +29,26 @@ class Conn(Shell):
         self.ssh_user = 'starbuck'
 
 
+
         if os.path.exists(self.path_cert) == False:
             exit(f'{color.FAIL}File does not exist: {self.path_cert}{color.END}')
 
         print(f'{color.HEADER}Found key file: {self.path_cert}{color.END}')
         
-        container_id = self.run_ssh_command()
-    
+        #self.result = self.run_ssh_command(command)
 
         #self._create_certs()
         
-        self.build_shell_string(container_id)
+        self.build_shell_string(self.result)
 
 
-    def build_shell_string(self, container_id):
-        self.shell_string = f'docker exec {container_id}'
+    def build_shell_string(self, ssh_result):
+        self.result = ssh_result
 
 
         
 
-    def run_ssh_command(self):
+    def run(self, command):
 
         # the host key contains a list of hosts
         for host in self.config['database_config']['host']:
@@ -58,8 +60,9 @@ class Conn(Shell):
             # -n don't pass standard input, so it doesnt wait for a password and cause the command to hang
             # -q supress warnings, -qq suppress fatal too!
 
+            my_command = command.replace("cqlsh", f'cqlsh {host}')
             print(f'{color.HEADER}Connecting to: {self.ssh_user}@{host}{color.END}') 
-            print(f'{color.HEADER}Running command:{color.END} nodetool status') 
+            
             ssh = subprocess.Popen(['ssh',
                                         '-oConnectTimeout=1',
                                         '-oStrictHostKeyChecking=no',
@@ -68,14 +71,15 @@ class Conn(Shell):
                                         f'{self.ssh_user}@{host}',
                                         '-i',
                                         f'{self.path_cert}',
-                                        f'nodetool status'],
+                                        f'{my_command}'],
                                     stdin=subprocess.PIPE, 
                                     stdout=subprocess.PIPE,
                                     stderr=subprocess.PIPE) 
             (stdout, stderr) = ssh.communicate()
  
             if stdout:
-                print(f'{color.OKGREEN}{stdout.decode("utf-8").strip()}{color.END}')
+                print(f'{color.HEADER}Running command:{color.END} {my_command}') 
+                #print(f'{color.OKGREEN}{stdout.decode("utf-8").strip()}{color.END}')
                 print(f'{color.HEADER}Connection closed{color.END}')
                 return stdout.decode("utf-8").strip()
             else:

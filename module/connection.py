@@ -19,6 +19,8 @@ class Connection:
 
     config_fullpath = "config.yml"
     conn = object
+    config = object
+    connection_class = object
 
     def __init__(self):
         config = self._load_config()
@@ -30,29 +32,33 @@ class Connection:
         print(f"{color.OKCYAN}Config: using config setings for {color.BOLD}'{config['database_env']}'{color.END}")
 
         try:
-            connection_class = importlib.import_module(f"module.connectors.{config['database_env']}")
+            self.connection_class = importlib.import_module(f"module.connectors.{config['database_env']}")
         except:
             exit(f"{color.FAIL}Connection: could not find a connection module called '{config['database_env']}'{color.END}")
         
 
         #my_class = locate(f"module.connection.{config['database_env']}")
 
-        config = self._parse_config(config)
+        self.config = self._parse_config(config)
 
-        self.conn = connection_class.Conn(config)
-        self.shell_string = self.conn.shell_string
+
         
         self.db_env = '' # filed in from config
+
+
         
     
 
-    def run(self):
+    def run(self, command):
         """
         Attempts to run a command against the database
 
         :param input: the cqlsh result to parse and format
         :return: the result of the command on the shell
         """
+        c = self.connection_class.Conn(self.config) 
+        
+        return c.run(command), 'h'
 
     def _load_config(self):
 

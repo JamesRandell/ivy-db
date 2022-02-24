@@ -12,18 +12,20 @@ env = Environment(loader=file_loader)
 
 class base():
 
-    def command (self, cmd):
+    def command (self, command):
 
-        cmd = f'{conn.shell_string} {cmd}'
-        out, err = Shell.run(cmd)
+        #command = f'{conn.shell_string} {command}'
+        #out, err = Shell.run(command)
 
+        out, err = conn.run(command)
+        
         return out, err
 
-    def command_cql(self, cmd):
-        script = cmd
-        cmd = f"cqlsh -e \"{cmd}\""
+    def command_cql(self, command):
+        script = command
+        command = f"cqlsh -e \"{command}\""
 
-        out, err = self.command(cmd)
+        out, err = self.command(command)
 
         # CQL errors come as a string with 4 sections, seperated by a colon:
         # (0)<stdin> : (1)error number : (2)type or code : (3)description (more on this)
@@ -77,8 +79,63 @@ class base():
 
         return output
 
-    def process_cql_result(self, input, seperator = "|", key=None):
+    def process_cql_result(self, input):
         """
+        Takes the output of a cqlsh shell command and formats it use in the app
+        The input here is already in cqlsh JSON format (SELECT JSON...)
+
+        :param input: the cqlsh result to parse and format
+        :param seperator: the delimiter to cut up our columns
+        :param key: if specified, will 'key' a row by this value returned in each row
+        :return: an array of the original result, parsed
+        """
+
+        meta = {}
+        output = []
+        
+        rows = input.split("\n")
+        
+
+        # remove any blank rows that get returned from the shell
+        rows = list(filter(None, rows))
+
+
+        # cqlsh tidy up. Remove the header row, the seperator row (------)
+        # and the row count at the end. Do this in reverse order so we don't
+        # trip over outsevles when doing array deletes
+        try:
+            del rows[len(rows)-1]
+            del rows[1]
+            del rows[0]
+        except KeyError:
+            pass
+
+        
+
+        meta['count'] = len(rows)
+        if (meta['count'] == 0):
+            meta['nodata'] = True
+        print(rows)
+        for row in rows:
+            if (row == ''):
+                continue
+            print(row)
+            # we create a temp object to store each row in so we don't get 
+            # row keys in our output, instead it's just a key-less array
+            temp = {}
+            temp = json.loads(row)
+
+            output.append(temp)
+
+        print(output)
+        return output, meta['count'], meta
+
+
+    def process_cql_result_backup(self, input, seperator = "|", key=None):
+        """
+        BACKUP This is left here when the result was formatted as a standard table from cqlsh,
+        despite what i said below about JSON
+
         Takes the output of a cqlsh shell command and formats it use in the app
         The input here is already in cqlsh JSON format (SELECT JSON...)
 
@@ -101,7 +158,7 @@ class base():
 
         # remove any blank rows that get returned from the shell
         rows = list(filter(None, rows))
-        
+        print(rows)
         
         # we process the first row (the header row) outside of the loop
         # and store it's keys in a dedicated array
