@@ -57,12 +57,13 @@ class Conn(Shell):
             # -oStrictHostKeyChecking gets around any invalid root CAs
             # -tt force psueo tty (honestly can't remember why this is here, test without?)
             # -i private key (identity file)
-            # -n don't pass standard input, so it doesnt wait for a password and cause the command to hang
+            # -n don't pass standard input, so it doesnt wait for a password and cause 9the command to hang
             # -q supress warnings, -qq suppress fatal too!
 
-            my_command = command.replace("cqlsh", f'cqlsh {host}')
+            my_command = command.replace("cqlsh", f'cqlsh -h {host}')
             print(f'{color.HEADER}Connecting to: {self.ssh_user}@{host}{color.END}') 
-            
+
+
             ssh = subprocess.Popen(['ssh',
                                         '-oConnectTimeout=1',
                                         '-oStrictHostKeyChecking=no',
@@ -76,15 +77,18 @@ class Conn(Shell):
                                     stdout=subprocess.PIPE,
                                     stderr=subprocess.PIPE) 
             (stdout, stderr) = ssh.communicate()
- 
-            if stdout:
-                print(f'{color.HEADER}Running command:{color.END} {my_command}') 
-                #print(f'{color.OKGREEN}{stdout.decode("utf-8").strip()}{color.END}')
-                print(f'{color.HEADER}Connection closed{color.END}')
-                return stdout.decode("utf-8").strip()
-            else:
+
+
+            if (ssh.returncode != 0):
                 print(f'{color.FAIL}{stderr.decode("utf-8").strip()}{color.END}')
                 
+            if stdout:
+                print(f'{color.HEADER}Running command:{color.END} {my_command}') 
+                print(f'{color.OKGREEN}{stdout.decode("utf-8").strip()}{color.END}')
+                print(f'{color.HEADER}Connection closed{color.END}')
+                return stdout.decode("utf-8").strip()
+            
+
 
 
     def _create_certs(self):

@@ -9,8 +9,7 @@ from view.ns_keyspace import ns_keyspace
 from view.ns_health import ns_health
 
 app = Flask(__name__) 
-#api = Api(app = app)
-
+#api = Api(app = app) 
 
 
 api = Api(

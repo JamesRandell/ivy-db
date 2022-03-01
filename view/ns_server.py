@@ -28,15 +28,33 @@ class nodetool_status(Resource, base):
 
         for key, line in out.items(): 
             if (key >= 6):
+                ii = 0
                 temp = {}
+                # 1: UN/DN etc
+                # 2: Address (IP) 
+                # 3: Load
+                # 4: Load in KiB (sometimes is empty is previous value is a ?)
+                # 5: Tokens
+                # 6: Owns (effective)
+                # 7: Host ID
+                # 8: Rack
                 temp["status"] = status.get(line[1], "Unknown status")
                 temp["state"] = state.get(line[1], "Unknown state")
-                temp["load"] = line[5]
-                temp["owns"] = line[6]
-                temp["hostID"] = line[7]
-                temp["rack"] = line[8]
+                temp["load"] = line[3]
+
+                if (line[3] == '?'):
+                    """
+                    Skip the next list item as it will be a unit, such as KiB
+                    """
+                    ii = 1
+                
+                temp["tokens"] = line[5-ii]
+                temp["owns"] = line[6-ii]
+                temp["hostID"] = line[7-ii]
+                temp["rack"] = line[8-ii]
                 result["host"].append(temp)
 
+        
         return result, 200
 ns_nodetool.add_resource(nodetool_status, '/status') # Route_2
 
