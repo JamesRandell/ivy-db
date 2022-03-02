@@ -60,7 +60,7 @@ class Conn(Shell):
             # -n don't pass standard input, so it doesnt wait for a password and cause 9the command to hang
             # -q supress warnings, -qq suppress fatal too!
 
-            my_command = command.replace("cqlsh", f'cqlsh -h {host}')
+            my_command = command.replace("cqlsh", f'cqlsh {host}')
             print(f'{color.HEADER}Connecting to: {self.ssh_user}@{host}{color.END}') 
 
 

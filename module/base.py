@@ -30,6 +30,10 @@ class base():
         # CQL errors come as a string with 4 sections, seperated by a colon:
         # (0)<stdin> : (1)error number : (2)type or code : (3)description (more on this)
         errStruct = {}
+        
+        if err == 'h':
+            err = None
+
         if err:
             err = err.split(':')
             errStruct['error'] = err[-1].strip()
@@ -79,7 +83,7 @@ class base():
 
         return output
 
-    def process_cql_result(self, input):
+    def process_cql_result(self, input, key):
         """
         Takes the output of a cqlsh shell command and formats it use in the app
         The input here is already in cqlsh JSON format (SELECT JSON...)
@@ -102,20 +106,19 @@ class base():
 
         # cqlsh tidy up. Remove the header row, the seperator row (------)
         # and the row count at the end. Do this in reverse order so we don't
-        # trip over outsevles when doing array deletes
+        # trip over oursevles when doing array deletes
         try:
-            del rows[len(rows)-1]
-            del rows[1]
-            del rows[0]
+            del rows[len(rows)-1] # end row
+            del rows[1] # the ----- row
+            del rows[0] # the header row
         except KeyError:
             pass
 
-        
 
         meta['count'] = len(rows)
         if (meta['count'] == 0):
             meta['nodata'] = True
-        print(rows)
+        
         for row in rows:
             if (row == ''):
                 continue
@@ -123,7 +126,7 @@ class base():
             # we create a temp object to store each row in so we don't get 
             # row keys in our output, instead it's just a key-less array
             temp = {}
-            temp = json.loads(row)
+            temp = row #json.loads(row)
 
             output.append(temp)
 
