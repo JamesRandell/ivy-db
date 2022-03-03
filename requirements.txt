@@ -3,4 +3,3 @@ flask_restx==0.5.1
 Jinja2==3.0.3
 setuptools==56.0.0
 pyyaml>=6.0
-npm
