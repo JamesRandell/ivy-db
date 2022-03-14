@@ -1,5 +1,6 @@
 from flask import Flask, request, jsonify
 from flask_restx import Resource, Api, reqparse, Namespace
+from flask_cors import CORS
 from module.base import base
 import json
 
@@ -10,7 +11,7 @@ from view.ns_health import ns_health
 
 app = Flask(__name__) 
 #api = Api(app = app) 
-
+CORS(app)
 
 api = Api(
     #blueprint,
