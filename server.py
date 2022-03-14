@@ -24,8 +24,9 @@ api = Api(
 )
 
 # enable CORS
-CORS(app, resources={r"/*": {"origins": "http://localhost:5000"}}, allow_headers=['Content-Type', 'Access-Control-Allow-Origin',
-                         'Access-Control-Allow-Headers', 'Access-Control-Allow-Methods'])
+CORS(app)
+#CORS(app, resources={r"/*": {"origins": "http://localhost:5000"}}, allow_headers=['Content-Type', 'Access-Control-Allow-Origin',
+#                         'Access-Control-Allow-Headers', 'Access-Control-Allow-Methods'])
 #CORS(app, support_credentials=True)
 #, resources={r'/*': {'origins': '*'}}
 
@@ -53,4 +54,4 @@ class keyspace(Resource, base):
 api.add_resource(keyspace, '/<string:keyspace>')
 
 if __name__ == '__main__':
-     app.run(host='0.0.0.0', port='5000',ssl_context='adhoc')
+     app.run(host='localhost', port='5000',ssl_context='adhoc')
