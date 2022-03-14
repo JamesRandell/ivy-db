@@ -24,8 +24,8 @@ api = Api(
 )
 
 # enable CORS
-CORS(app, resources={r'/*': {'origins': '*'}})
-
+CORS(app)
+#, resources={r'/*': {'origins': '*'}}
 
 #parser = reqparse.RequestParser()  # initialize
 # APIs are defined under a given namespace, they appear under a given heading in Swagger
