@@ -1,6 +1,6 @@
 Flask==2.0.2
 flask_restx==0.5.1
-flask_cors
+flask_cors==3.0.10
 Jinja2==3.0.3
 setuptools==56.0.0
 pyyaml>=6.0
