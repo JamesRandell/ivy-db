@@ -1,6 +1,6 @@
 from flask import Flask, request, jsonify
 from flask_restx import Resource, Api, reqparse, Namespace
-from flask_cors import CORS
+from flask_cors import CORS, cross_origin
 from module.base import base
 import json
 
@@ -24,9 +24,9 @@ api = Api(
 )
 
 # enable CORS
-CORS(app)
+CORS(app, support_credentials=True))
 #, resources={r'/*': {'origins': '*'}}
-
+@cross_origin(supports_credentials=True)
 #parser = reqparse.RequestParser()  # initialize
 # APIs are defined under a given namespace, they appear under a given heading in Swagger
 api.add_namespace(ns_nodetool)

@@ -1,6 +1,5 @@
 from flask import Flask, Blueprint, jsonify
 from flask_restx import Resource, Api, reqparse, Namespace
-from flask_cors import cross_origin
 from module.base import base
 import json
 
@@ -10,7 +9,7 @@ import json
 ns_nodetool = Namespace('cluster', description='Cluster wide information')
 
 class nodetool_status(Resource, base):
-    @cross_origin()
+
     def get(self):
         out, err = self.command("nodetool status")
         out = self.process_shell_result(out)
