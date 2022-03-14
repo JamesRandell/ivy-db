@@ -11,7 +11,9 @@ from view.ns_health import ns_health
 
 app = Flask(__name__) 
 #api = Api(app = app) 
-CORS(app)
+
+
+
 
 api = Api(
     #blueprint,
@@ -20,6 +22,11 @@ api = Api(
     title="API Cassandra",
     description="Cassandra REST API"
 )
+
+# enable CORS
+CORS(app, resources={r'/*': {'origins': '*'}})
+
+
 #parser = reqparse.RequestParser()  # initialize
 # APIs are defined under a given namespace, they appear under a given heading in Swagger
 api.add_namespace(ns_nodetool)
