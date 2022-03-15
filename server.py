@@ -12,7 +12,7 @@ from view.ns_health import ns_health
 app = Flask(__name__) 
 #api = Api(app = app) 
 
-
+api = Api(Blueprint)
 
 blueprint = Blueprint('api', __name__, url_prefix='/api/1')
 api = Api(
