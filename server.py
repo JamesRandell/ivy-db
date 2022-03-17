@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, Blueprint
+from flask import Flask, request, jsonify
 from flask_restx import Resource, Api, reqparse, Namespace
 from flask_cors import CORS, cross_origin
 from module.base import base
@@ -12,11 +12,11 @@ from view.ns_health import ns_health
 app = Flask(__name__) 
 #api = Api(app = app) 
 
-api = Api(Blueprint)
 
-blueprint = Blueprint('api', __name__, url_prefix='/api/1')
+
+
 api = Api(
-    blueprint,
+    #blueprint,
     app = app,
     version="1.0.0",
     title="API Cassandra",
@@ -54,4 +54,4 @@ class keyspace(Resource, base):
 api.add_resource(keyspace, '/<string:keyspace>')
 
 if __name__ == '__main__':
-     app.run(host='0.0.0.0', port='5000',ssl_context='adhoc', debug=False)
+     app.run(host='0.0.0.0', port='5000',ssl_context='adhoc', debug=True)
