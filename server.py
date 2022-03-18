@@ -3,7 +3,7 @@ from quart_cors import cors
 
 from flask import Flask, request, jsonify
 from flask_restx import Resource, Api, reqparse, Namespace
-#from flask_cors import CORS, cross_origin
+from flask_cors import CORS, cross_origin
 from module.base import base
 import json
 
@@ -14,7 +14,7 @@ from view.ns_table import ns_table
 from view.ns_keyspace import ns_keyspace
 from view.ns_health import ns_health
 
-app = Quart(__name__) 
+app = Flask(__name__) 
 #api = Api(app = app) 
 
 
@@ -29,7 +29,7 @@ api = Api(
 )
 
 # enable CORS
-cors(app, allow_origin="*", allow_methods=["GET", "POST", "DELETE", "OPTIONS"], allow_headers=['Content-Type', 'Access-Control-Allow-Origin','Access-Control-Allow-Headers', 'Access-Control-Allow-Methods'])
+CORS(app, allow_origin="*", allow_methods=["GET", "POST", "DELETE", "OPTIONS"], allow_headers=['Content-Type', 'Access-Control-Allow-Origin','Access-Control-Allow-Headers', 'Access-Control-Allow-Methods'])
 
 
 #CORS(app)
