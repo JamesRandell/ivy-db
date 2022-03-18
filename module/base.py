@@ -64,7 +64,7 @@ class base():
         """
         l, c = 0, 0
         output = {}
-        return input
+        
         for line in input.split("\n"):
             if (line == ''):
                 continue

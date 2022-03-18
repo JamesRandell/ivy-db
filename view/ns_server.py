@@ -12,7 +12,6 @@ class nodetool_status(Resource, base):
 
     def get(self):
         out, err = self.command("nodetool status")
-        return out, 200
         out = self.process_shell_result(out)
 
         status = {"UN": "Up","UL": "Up","UJ": "Up","UM": "Up","DN": "Down","DL": "Down","DJ": "Down","DM": "Down"}
@@ -26,7 +25,7 @@ class nodetool_status(Resource, base):
         
         result["datacenter"] = out[1][2]
         result["host"] = []
-        
+
         for key, line in out.items(): 
             if (key >= 6):
                 ii = 0
