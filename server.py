@@ -24,7 +24,10 @@ api = Api(
 )
 
 # enable CORS
-CORS(app)
+CORS(app, allow_origin="*", allow_methods=["GET", "POST", "DELETE", "OPTIONS"])
+
+
+#CORS(app)
 #CORS(app, resources={r"/*": {"origins": "http://localhost:5000"}}, allow_headers=['Content-Type', 'Access-Control-Allow-Origin',
 #                         'Access-Control-Allow-Headers', 'Access-Control-Allow-Methods'])
 #CORS(app, support_credentials=True)
