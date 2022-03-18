@@ -60,6 +60,6 @@ class keyspace(Resource, base):
         return jsonify(out)
 
 api.add_resource(keyspace, '/<string:keyspace>')
-
+#ssl_context='adhoc',
 if __name__ == '__main__':
-     app.run(host='0.0.0.0', port='5000',ssl_context='adhoc', debug=True)
+     app.run(host='0.0.0.0', port='5000', debug=True)
