@@ -25,7 +25,7 @@ class nodetool_status(Resource, base):
         
         result["datacenter"] = out[1][2]
         result["host"] = []
-
+        return out
         for key, line in out.items(): 
             if (key >= 6):
                 ii = 0
