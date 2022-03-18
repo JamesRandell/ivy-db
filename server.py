@@ -3,7 +3,7 @@ from quart_cors import cors
 
 from flask import Flask, request, jsonify
 from flask_restx import Resource, Api, reqparse, Namespace
-from flask_cors import CORS, cross_origin
+#from flask_cors import CORS, cross_origin
 from module.base import base
 import json
 
@@ -29,7 +29,7 @@ api = Api(
 )
 
 # enable CORS
-CORS(app, allow_origin="*", allow_methods=["GET", "POST", "DELETE", "OPTIONS"], allow_headers=['Content-Type', 'Access-Control-Allow-Origin','Access-Control-Allow-Headers', 'Access-Control-Allow-Methods'])
+cors(app, allow_origin="*", allow_methods=["GET", "POST", "DELETE", "OPTIONS"], allow_headers=['Content-Type', 'Access-Control-Allow-Origin','Access-Control-Allow-Headers', 'Access-Control-Allow-Methods'])
 
 
 #CORS(app)
