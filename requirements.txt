@@ -5,3 +5,5 @@ Jinja2==3.0.3
 setuptools==56.0.0
 pyyaml>=6.0
 pyopenssl
+quart
+quart_cors

@@ -1,8 +1,13 @@
+from quart import Quart
+from quart_cors import cors
+
 from flask import Flask, request, jsonify
 from flask_restx import Resource, Api, reqparse, Namespace
 from flask_cors import CORS, cross_origin
 from module.base import base
 import json
+
+
 
 from view.ns_server import ns_nodetool
 from view.ns_table import ns_table
@@ -24,7 +29,10 @@ api = Api(
 )
 
 # enable CORS
-CORS(app)
+CORS(app, allow_origin="*", allow_methods=["GET", "POST", "DELETE", "OPTIONS"], allow_headers=['Content-Type', 'Access-Control-Allow-Origin','Access-Control-Allow-Headers', 'Access-Control-Allow-Methods'])
+
+
+#CORS(app)
 #CORS(app, resources={r"/*": {"origins": "http://localhost:5000"}}, allow_headers=['Content-Type', 'Access-Control-Allow-Origin',
 #                         'Access-Control-Allow-Headers', 'Access-Control-Allow-Methods'])
 #CORS(app, support_credentials=True)
@@ -52,6 +60,6 @@ class keyspace(Resource, base):
         return jsonify(out)
 
 api.add_resource(keyspace, '/<string:keyspace>')
-
+#ssl_context='adhoc',
 if __name__ == '__main__':
      app.run(host='0.0.0.0', port='5000', debug=True)
