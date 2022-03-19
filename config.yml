@@ -1,13 +1,12 @@
 database: cassandra
 
-#database_env: docker
-#database_config:
-#  host: localhost
-#  container: ivy-ui-cassandra
+database_env: docker
+database_config:
+  host: localhost
+  container: ivy-ui-cassandra
 
 #database_env: ssh
-database_env: ssh
-database_config:
-  host: [192.168.1.55,192.168.1.56,192.168.1.57,192.168.1.58,192.168.1.59]
+#database_config:
+#  host: [192.168.1.55,192.168.1.56,192.168.1.57,192.168.1.58,192.168.1.59]
 #  #post: 
 
