@@ -6,7 +6,7 @@ import json
 #blueprint = Blueprint("api", __name__, url_prefix="/api/v1")
 
 # Namespace
-ns_nodetool = Namespace('cluster', description='Cluster wide information')
+ns_cluster = Namespace('cluster', description='Cluster wide information')
 
 class nodetool_status(Resource, base):
 
@@ -56,7 +56,7 @@ class nodetool_status(Resource, base):
 
         
         return result, 200
-ns_nodetool.add_resource(nodetool_status, '/status') # Route_2
+ns_cluster.add_resource(nodetool_status, '/status') # Route_2
 
 
 class nodetool_info(Resource, base):
@@ -94,7 +94,7 @@ class nodetool_info(Resource, base):
         result["save_period"] = temp[7].replace('save period in seconds', '').strip()
 
         return result
-ns_nodetool.add_resource(nodetool_info, '/info') # Route_2
+ns_cluster.add_resource(nodetool_info, '/info') # Route_2
 
 
 class nodetool_profileload(Resource, base):
@@ -103,7 +103,7 @@ class nodetool_profileload(Resource, base):
         out = self.process_shell_result(out, seperator=":")
         #out = json.loads(out)
         return out, 200
-ns_nodetool.add_resource(nodetool_profileload, '/profile') # Route_2
+ns_cluster.add_resource(nodetool_profileload, '/profile') # Route_2
 
 
 class nodetool_histograms(Resource, base):
@@ -113,7 +113,7 @@ class nodetool_histograms(Resource, base):
         #out = json.loads(out)
         
         return out, 200
-ns_nodetool.add_resource(nodetool_histograms, '/histogram') # Route_2
+ns_cluster.add_resource(nodetool_histograms, '/histogram') # Route_2
 
 
 class nodetool_tablestats(Resource, base):
@@ -123,4 +123,4 @@ class nodetool_tablestats(Resource, base):
         
         return out, 200
 
-ns_nodetool.add_resource(nodetool_tablestats, '/tablestats') # Route_2
+ns_cluster.add_resource(nodetool_tablestats, '/tablestats') # Route_2

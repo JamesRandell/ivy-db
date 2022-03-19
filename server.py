@@ -9,7 +9,7 @@ import json
 
 
 
-from view.ns_server import ns_nodetool
+from view.ns_cluster import ns_cluster
 from view.ns_table import ns_table
 from view.ns_keyspace import ns_keyspace
 from view.ns_health import ns_health
@@ -40,7 +40,7 @@ CORS(app, allow_origin="*", allow_methods=["GET", "POST", "DELETE", "OPTIONS"], 
 
 #parser = reqparse.RequestParser()  # initialize
 # APIs are defined under a given namespace, they appear under a given heading in Swagger
-api.add_namespace(ns_nodetool)
+api.add_namespace(ns_cluster)
 api.add_namespace(ns_table)
 api.add_namespace(ns_keyspace)
 api.add_namespace(ns_health)

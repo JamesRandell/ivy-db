@@ -1,4 +1,4 @@
-from view.ns_server import *
+from view.ns_cluster import *
 from module.base import base
 from flask import jsonify, request
 import sys, importlib
