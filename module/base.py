@@ -19,6 +19,8 @@ class base():
 
         out, err = conn.run(command)
         
+        if err:
+            raise ValueError("Could not run command")
         return out, err
 
     def command_cql(self, command):
