@@ -16,7 +16,6 @@ class base():
 
         #command = f'{conn.shell_string} {command}'
         #out, err = Shell.run(command)
-
         out, err = conn.run(command)
         
         if err:

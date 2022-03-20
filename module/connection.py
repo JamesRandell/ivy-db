@@ -27,14 +27,14 @@ class Connection:
 
         # now lets call a class that matches the config
         if 'database_env' not in config:
-            exit(f"{color.FAIL}Config: error - 'database_env' is missing{color.END}") 
+            raise ValueError(f"{color.FAIL}Config: error - 'database_env' is missing{color.END}") 
         
         print(f"{color.OKCYAN}Config: using config setings for {color.BOLD}'{config['database_env']}'{color.END}")
 
         try:
             self.connection_class = importlib.import_module(f"module.connectors.{config['database_env']}")
         except:
-            exit(f"{color.FAIL}Connection: could not find a connection module called '{config['database_env']}'{color.END}")
+            raise ValueError(f"{color.FAIL}Connection: could not find a connection module called '{config['database_env']}'{color.END}")
         
 
         #my_class = locate(f"module.connection.{config['database_env']}")
