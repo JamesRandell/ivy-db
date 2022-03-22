@@ -31,7 +31,7 @@ class Conn(Shell):
 
 
         if os.path.exists(self.path_cert) == False:
-            exit(f'{color.FAIL}File does not exist: {self.path_cert}{color.END}')
+            raise ValueError(f'{color.FAIL}File does not exist: {self.path_cert}{color.END}')
 
         print(f'{color.HEADER}Found key file: {self.path_cert}{color.END}')
         

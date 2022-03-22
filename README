@@ -11,7 +11,7 @@ python test.py
 npm run test # or wintest for windows
 
 # try this for testing:
-npm run wintest ns_server nodetool_status
+npm run wintest ns_cluster nodetool_status
 
 
 

@@ -1,3 +1,4 @@
+from asyncio.windows_events import NULL
 from distutils.log import error
 import errno
 from sre_compile import isstring
@@ -58,7 +59,7 @@ class Connection:
         """
         c = self.connection_class.Conn(self.config) 
         
-        return c.run(command), 'h'
+        return c.run(command), NULL
 
     def _load_config(self):
 
