@@ -58,7 +58,7 @@ class Connection:
         """
         c = self.connection_class.Conn(self.config) 
         
-        return c.run(command), NULL
+        return c.run(command)
 
     def _load_config(self):
 

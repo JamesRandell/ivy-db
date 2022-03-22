@@ -2,6 +2,7 @@
 import subprocess
 from module.shell import Shell
 import os
+import sys
 
 class color:
     HEADER = '\033[95m'
@@ -63,31 +64,41 @@ class Conn(Shell):
             my_command = command.replace("cqlsh", f'cqlsh {host}')
             print(f'{color.HEADER}Connecting to: {self.ssh_user}@{host}{color.END}') 
 
+            try:
+                ssh = subprocess.Popen(['ssh',
+                                            '-oConnectTimeout=1',
+                                            '-oStrictHostKeyChecking=no',
+                                            '-oBatchMode=yes',
+                                            '-tt',
+                                            f'{self.ssh_user}@{host}',
+                                            '-i',
+                                            f'{self.path_cert}',
+                                            f'{my_command}'],
+                                        stdin=subprocess.PIPE, 
+                                        stdout=subprocess.PIPE,
+                                        stderr=subprocess.PIPE) 
+                (stdout, stderr) = ssh.communicate()
 
-            ssh = subprocess.Popen(['ssh',
-                                        '-oConnectTimeout=1',
-                                        '-oStrictHostKeyChecking=no',
-                                        '-oBatchMode=yes',
-                                        '-tt',
-                                        f'{self.ssh_user}@{host}',
-                                        '-i',
-                                        f'{self.path_cert}',
-                                        f'{my_command}'],
-                                    stdin=subprocess.PIPE, 
-                                    stdout=subprocess.PIPE,
-                                    stderr=subprocess.PIPE) 
-            (stdout, stderr) = ssh.communicate()
 
-
-            if (ssh.returncode != 0):
-                print(f'{color.FAIL}{stderr.decode("utf-8").strip()}{color.END}')
+                if stdout:
+                    print(f'{color.HEADER}Running command:{color.END} {my_command}') 
+                    print(f'{color.OKGREEN}{stdout.decode("utf-8").strip()}{color.END}')
+                    print(f'{color.HEADER}Connection closed{color.END}')
+                    return stdout.decode("utf-8").strip(), None
+                    
+                if (ssh.returncode != 0):
+                    print(f'{color.FAIL}{stderr.decode("utf-8").strip()}{color.END}')
+                    return None, stderr.decode("utf-8").strip()
+                    
                 
-            if stdout:
-                print(f'{color.HEADER}Running command:{color.END} {my_command}') 
-                print(f'{color.OKGREEN}{stdout.decode("utf-8").strip()}{color.END}')
-                print(f'{color.HEADER}Connection closed{color.END}')
-                return stdout.decode("utf-8").strip()
-            
+
+            except OSError as e:
+                print ("OSError > "),e.errno
+                print ("OSError > "),e.strerror
+                print ("OSError > "),e.filename
+
+            except:
+                print ("Error > "),sys.exc_info()[0] 
 
 
 
