@@ -3,6 +3,7 @@ import subprocess
 from module.shell import Shell
 import os
 import sys
+from pathlib import Path
 
 class color:
     HEADER = '\033[95m'
@@ -25,8 +26,12 @@ class Conn(Shell):
         
         self.config = config # not used right now as i'm just dealing with local docker
 
-        self.path_cert = os.path.dirname(os.path.realpath(__file__)) + '\keys\id_rsa'
 
+        path = os.path.dirname(os.path.realpath(__file__)) + '\keys\id_rsa'
+
+        self.path_cert = Path(path)
+
+        
         self.ssh_user = 'starbuck'
 
 
