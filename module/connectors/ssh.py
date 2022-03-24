@@ -103,7 +103,7 @@ class Conn(Shell):
                 print ("OSError > "),e.errno
                 print ("OSError > "),e.strerror
                 print ("OSError > "),e.filename
-                raise ValueError(f'{color.FAIL}OSError{color.END}') 
+                raise ValueError(f'{color.FAIL}OSError{color.END}')
 
             except:
                 print ("Error > "),sys.exc_info()[0]
