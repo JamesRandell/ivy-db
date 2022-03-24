@@ -27,10 +27,12 @@ class Conn(Shell):
         self.config = config # not used right now as i'm just dealing with local docker
 
 
-        path = os.path.dirname(os.path.realpath(__file__)) + '/keys/id_rsa'
+        #path = os.path.dirname(os.path.realpath(__file__)) + '/keys/id_rsa'
+        path = os.path.join( "module", "connectors", "keys", "id_rsa" )
+
 
         self.path_cert = Path(path)
-
+        print('SOMETHING')
 
         self.ssh_user = 'starbuck'
 
