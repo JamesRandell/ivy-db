@@ -31,9 +31,10 @@ class ns_table_table(Resource, base):
         params={
             'keyspace': 'Name of a keyspace'
         })
+
     def get(self, keyspace):
-        out, err = self.command(f"cqlsh -e \"SELECT JSON * FROM system_schema.tables WHERE keyspace_name = '{keyspace}'\"")
-        out, count, meta = self.process_cql_result(out, key="table_name")
+        out, err = self.command(f'cqlsh -e "SELECT JSON * FROM system_schema.tables WHERE keyspace_name = \'system\'"')
+        out, count, meta = self.process_cql_result(out)
         
         if (count == 0):
             return meta, 404
@@ -48,7 +49,7 @@ class ns_table_table(Resource, base):
             404: 'Keyspace not found'},
         params={
             'keyspace': 'Name of a keyspace'
-        })
+        }) 
     @api.expect(parser)
     def put(self, keyspace):
         parsed_template = self._parse_create_table()
